@@ -9,5 +9,5 @@ See LICENSE files or the above link for details.
 
 # Examples
 
-The `examples` directory contain [seaborn](https://seaborn.pydata.org/) plotting examples in annotated code samples.  These examples produced all the plots shown in the presentation.
+The [`examples`](./examples) directory contain [seaborn](https://seaborn.pydata.org/) plotting examples in annotated code samples.  These examples produced all the plots shown in the presentation.
 
