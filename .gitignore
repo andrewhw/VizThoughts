@@ -1,0 +1,13 @@
+*.aux
+*.bak
+*.log
+*.nav
+*.out
+*.snm
+*.toc
+*.upa
+*.zip
+BINF6999-Visualization.pdf
+code
+figures
+makefile
