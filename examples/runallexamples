@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# run all the examples in this directory (they all begin with "a" or "b")
+for examplefile in [ab]*.py
+do
+	echo "Running: ${examplefile}"
+	python ${examplefile}
+done
+

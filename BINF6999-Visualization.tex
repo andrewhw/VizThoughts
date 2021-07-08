@@ -1,0 +1,926 @@
+%% $Id: 014-Summary.tex,v 1.1 2005/04/05 15:07:55 andrew Exp 2
+
+\documentclass{beamer}
+%\mode<presentation>{\usetheme{PaloAlto}\usecolortheme{crane}}
+\mode<presentation>{\usetheme{Warsaw}\usecolortheme{beaver}}
+
+
+\usepackage[latin1]{inputenc}
+\usepackage{helvet}
+\usepackage{graphicx}
+\usepackage{xspace}
+\usepackage{paralist}
+\usepackage{amsmath,amssymb,bm}
+\usepackage{amsthm}
+\usepackage{multirow}
+\usepackage{fancybox}
+\usepackage{cancel}
+\usepackage{alphalph}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{pagecolor}
+\usepackage{pdfcomment}
+\usepackage{wasysym}
+\usepackage{ulem}
+\usepackage{svg}
+\usepackage[weather]{ifsym}
+\usepackage{colortbl}
+\usepackage[linesnumbered,ruled,vlined]{algorithm2e}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{fontawesome}
+\usepackage{transparent}
+
+
+%\usepackage{quotes}
+
+%\usepackage{tgadventor}
+
+%\usepackage[T3]{fontenc}
+%\usepackage{libertine}
+%\renewcommand*\familydefault{\sfdefault}
+
+\usepackage[T1]{fontenc}
+\usepackage[default]{gillius}
+\usepackage[absolute,overlay]{textpos}
+
+\setlength{\TPHorizModule}{1pt}
+\setlength{\TPVertModule}{1pt}
+
+
+\DeclareMathOperator*{\sign}{sign}
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\gain}{gain}
+\newcommand{\data}{\ensuremath{\text{\it{Data}}}}
+\newcommand{\random}{\ensuremath{\text{\it{~random~}}}}
+\newcommand{\epoch}{\ensuremath{\text{\it{~epoch~}}}}
+\newcommand{\error}{\ensuremath{\epsilon}}
+\newcommand{\errValue}{\ensuremath{\epsilon}}
+\newcommand{\pattern}{\ensuremath{\text{\it{~pattern~}}}}
+\newcommand{\unusedPatterns}{\ensuremath{\mathcal{U}}}
+\newcommand{\nTrain}{\ensuremath{N_\mathcal{T}}}
+\newcommand{\nHidden}{\ensuremath{N_\mathcal{H}}}
+\newcommand{\nOutput}{\ensuremath{N_\mathcal{O}}}
+\newcommand{\nInput}{\ensuremath{N_\mathcal{I}}}
+\newcommand{\momentum}{\ensuremath{\rho}}
+\newcommand{\usingMomentum}{\ensuremath{\rho > 0}}
+\newcommand{\DV}{\ensuremath{V^{{\Delta}}}}
+\newcommand{\DW}{\ensuremath{W^{{\Delta}}}}
+\newcommand{\sigmoid}{\ensuremath{\text{\it sigmoid}}}
+\newcommand{\sigError}{\ensuremath{\text{\it sigmoidError}}}
+
+
+\pagecolor{black}
+\color{white}
+
+
+\definecolor{grey1}{rgb}{0.9,0.9,0.9}
+\definecolor{grey2}{rgb}{0.8,0.8,0.8}
+\definecolor{grey3}{rgb}{0.7,0.7,0.7}
+\definecolor{grey4}{rgb}{0.6,0.6,0.6}
+\definecolor{grey5}{rgb}{0.5,0.5,0.5}
+\definecolor{grey6}{rgb}{0.4,0.4,0.4}
+\definecolor{grey7}{rgb}{0.3,0.3,0.3}
+\definecolor{grey8}{rgb}{0.2,0.2,0.2}
+%\definecolor{grey2}{rgb}{0.2,0.2.0.2}
+\definecolor{darkgrey}{rgb}{0.4,0.4,0.4}
+\definecolor{DarkBlue}{rgb}{0.8,0.8,1.0}
+\definecolor{darkgreen}{rgb}{0.0,0.45,0.0}
+\definecolor{DarkRed}{rgb}{1.0,0.3,0.3}
+\definecolor{keyred}{rgb}{.478,0,0}
+%\definecolor{darkyellow}{rgb}{1.0,0.9,0.0}
+%\definecolor{darkyellow}{rgb}{0.992, 0.788, 0.219} %0.8,0.7,0.0}
+%\definecolor{darkyellow}{rgb}{0.949, 0.604, 0.0} %0.8,0.7,0.0}
+\definecolor{darkyellow}{rgb}{1.0, 0.45, 0.0} %0.8,0.7,0.0}
+\definecolor{jade}{rgb}{0, 0.525, 0.5} %0.8,0.7,0.0}
+%\definecolor{orchid}{rgb}{0.18, 0.18, 0.608} %0.8,0.7,0.0}	51,51,178
+\definecolor{orchid}{rgb}{0.294, 0, 0.510} %0.8,0.7,0.0}	51,51,178
+\definecolor{lightgreen}{rgb}{0.5,1.0,0.0}
+\definecolor{burntumber}{rgb}{0.55, 0.2, 0.14} %0.8,0.7,0.0}
+\definecolor{darkblue}{rgb}{0.0, 0.0, 0.6} %0.8,0.7,0.0}
+\definecolor{lightcyan}{rgb}{0.44,1,1}
+\definecolor{lightgrey}{rgb}{0.65,0.65,0.65}
+
+
+
+
+\newcommand{\pc}[1]{\textcolor{orchid}{\texttt{#1}}}
+\newcommand{\comment}[1]{\textcolor{lightgrey}{\tcc{#1}}}
+
+\newcommand{\viterbi}[2]{\ensuremath{\text{\it viterbi}_{#1,#2}}}
+\newcommand{\backpointers}[2]{\ensuremath{\text{\it backpointers}_{#1,#2}}}
+\newcommand{\bestpathprob}{\ensuremath{\text{\it bestpathprobability}}}
+\newcommand{\bestpathptr}{\ensuremath{\text{\it bestpathpointer}}}
+\newcommand{\bestpathval}{\ensuremath{\text{\it bestpath}}}
+
+\makeatletter
+\newcommand*{\fnsymbolsingle}[1]{%
+\ensuremath{%
+    \ifcase#1%
+    \or *%
+    \or \dagger
+    \or \ddagger
+    %\or \mathframetitle
+    %\or \mathparagraph
+    %\or \triangleup
+    \or \triangleleft
+    \or \bowtie
+    \or \oplus
+    %\or \maltese
+    \else
+    \@ctrerr
+    \fi
+}%
+}
+\newalphalph{\fnsymbolwrap}[wrap]{\fnsymbolsingle}{}
+\makeatother
+\renewcommand\thefootnote{\fnsymbolwrap{\value{footnote}}}
+
+\def\clap#1{\hbox to 0pt{\hss#1\hss}}
+\def\mathllap{\mathpalette\mathllapinternal}
+\def\mathrlap{\mathpalette\mathrlapinternal}
+\def\mathclap{\mathpalette\mathclapinternal}
+\def\mathllapinternal#1#2{\llap{$\mathsurround=0pt#1{#2}$}}
+\def\mathrlapinternal#1#2{\rlap{$\mathsurround=0pt#1{#2}$}}
+\def\mathclapinternal#1#2{\clap{$\mathsurround=0pt#1{#2}$}}
+
+
+\newcommand{\eg}{\textit{e.g.},\xspace} % some Latin abreviations in italic
+\newcommand{\ie}{\textit{i.e.};\xspace}
+\newcommand{\aka}{\textit{a.k.a.}\xspace}
+\newcommand{\etc}{\textit{etc}.\@\xspace}
+\newcommand{\nil}[1]{#1}
+\newcommand{\key}[1]{\textcolor{keyred}{{\bf #1}}}
+\newcommand{\keytt}[1]{\textcolor{orchid}{{\tt #1}}}
+\newcommand{\keyttbox}[1]{\fcolorbox{orchid!16}{orchid!08}{\textcolor{orchid}{{\tt #1}}}}
+\newcommand{\base}[1]{\textcolor{orchid}{\ensuremath{\mathbf{\sf #1}}}}
+\newcommand{\keygreen}[1]{\textcolor{lightgreen}{\emph{#1}}}
+\newcommand{\blue}[1]{\textcolor{darkblue}{#1}}
+\newcommand{\kpoint}[1]{\textcolor{magenta}{Key Point: {\it #1}}}
+\newcommand{\kq}[1]{\textcolor{burntumber}{$\mathcal{Q}$: \emph{#1}}}
+\newcommand{\theref}{\ensuremath{\dot{.~.}~}}
+\newcommand{\since}{\ensuremath{\dot{~}.\dot{~}~}}
+\newcommand{\vs}{-\textit{vs}-}
+\newcommand{\fade}[1]{\textcolor{darkgrey}{#1}}
+
+\newcommand{\prop}[1]{\ensuremath{\mathbf{\sf #1}}}
+\newcommand{\limplies}[2]{\ensuremath{#1 \rightarrow #2}}
+\newcommand{\truep}{\ensuremath{\text{true}}}
+\newcommand{\falsep}{\ensuremath{\text{false}}}
+
+\def\tokinfo{\ensuremath{\mathcal{I}}\xspace}
+\def\dataset{\tokD}
+\def\targetfunction{\tokF}
+\def\classifier{\tokC}
+
+%\def\tokprob{\ensuremath{{\sf P}}\xspace}
+%\newcommand{\probability}[1]{\ensuremath{\tokprob\left({#1}\right)}\xspace}
+\def\tokprob{\ensuremath{{\sf P}}\xspace}
+%\newcommand{\probability}[1]{\ensuremath{\tokprob_{#1}}\xspace}
+\newcommand{\probability}[1]{\ensuremath{\tokprob\left({#1}\right)}\xspace}
+\newcommand{\probpi}[1]{\ensuremath{\Pi_{#1}}\xspace}
+\newcommand{\probvector}[1]{\ensuremath{\bm{P}\left({#1}\right)}\xspace}
+\newcommand{\information}[1]{\ensuremath{\tokinfo\left({#1}\right)}\xspace}
+\newcommand{\entropy}[1]{\ensuremath{\tokH\left({#1}\right)}\xspace}
+
+
+\newcommand{\expectation}[1]{\ensuremath{\mathcal{E}\left[{#1}\right]}\xspace}
+\newcommand{\variance}[1]{\ensuremath{\text{Var}\left[{#1}\right]}\xspace}
+
+\newcommand{\probAND}[2]{\ensuremath{{#1}\wedge{#2}}}
+\newcommand{\probOR}[2]{\ensuremath{{#1}\vee{#2}}}
+
+
+
+\newcommand{\event}[1]{\ensuremath{{#1}}\xspace}
+\def\eventA{\event{A}}
+\def\eventB{\event{B}}
+\def\eventC{\event{C}}
+\def\eventD{\event{D}}
+\def\eventE{\event{E}}
+\def\eventF{\event{F}}
+\def\eventG{\event{G}}
+\def\eventL{\event{L}}
+\def\eventO{\event{O}}
+\def\eventP{\event{P}}
+\def\eventR{\event{R}}
+\def\eventS{\event{S}}
+\def\eventW{\event{W}}
+\def\eventX{\event{X}}
+\def\eventY{\event{Y}}
+
+\def\tokC{\ensuremath{\mathcal{C}}\xspace}
+\def\tokD{\ensuremath{\mathcal{D}}\xspace}
+\def\tokF{\ensuremath{\mathcal{F}}\xspace}
+\def\tokS{\ensuremath{\mathcal{S}}\xspace}
+\def\tokH{\ensuremath{\mathcal{H}}\xspace}
+\def\tokU{\ensuremath{\mathcal{U}}\xspace}
+
+
+
+
+
+%	----------------------------------------------------------
+
+\title{Communication through Pictures}
+\subtitle{Data Visualization}
+
+\author{Dr.~Andrew Hamilton-Wright}
+\institute{School of Computer Science\\
+University of Guelph}
+
+%\date{Winter 2005}
+\date{\today}
+
+\definecolor{darkblue}{rgb}{0.0,0.0,0.8}
+
+% bibliography will have no number tags
+\makeatletter
+\def\@biblabel#1{\hspace*{-\labelsep}}
+\makeatother 
+
+
+\bibliographystyle{apalike}
+
+
+\begin{document}
+
+\setbeamertemplate{sidebar right}{}
+
+
+\newcommand*\oldmacro{}%
+\let\oldmacro\insertshorttitle%
+\renewcommand*\insertshorttitle{%
+  \oldmacro\hfill%
+\insertframenumber\,/\,\inserttotalframenumber}
+
+\begin{frame}
+    \titlepage
+\end{frame}
+
+
+%\begin{frame}
+%\frametitle{What we have to work with}
+%\begin{tabular}{@{}ll@{}}
+%\key{Our Goals}&
+%\key{Our Tools:}\\
+%\begin{minipage}[t]{0.4\textwidth}
+%\visible<2->{To clearly \key{discern} relationships in our \key{data}:}
+%	\begin{itemize}
+%	\item \visible<2->{scale}
+%	\item \visible<2->{order}
+%	\item \visible<2->{magnitude}
+%	\item \visible<2->{ranges}
+%	\item \visible<2->{item groupings}
+%	\item \visible<2->{structure}
+%	\end{itemize}
+%\visible<2->{Both \key{similarities} and \mbox{\key{differences}} are important}
+%\end{minipage}
+%&
+%\begin{minipage}[t]{0.6\textwidth}
+%%\visible<3->{\mbox{Human~visual~system} ~}
+%%\visible<3->{\includegraphics[width=\textwidth]{figures/Human_visual_pathway}}
+%\visible<3->{\includegraphics[width=\textwidth]{figures/Ware-Brain}}
+%\end{minipage}
+%\end{tabular}
+%\footnotetext[1]{\textcolor{darkgrey}{Ware, Colin (2008): {\it Visual Thinking for Design}, Morgan Kaufmann. ISBN:~978-0-12-370896-0}}
+%\end{frame}
+
+%\begin{frame}
+%\frametitle{What we can perceive}
+%\begin{itemize}
+%\item Why are some differences so much easier to perceive than others?
+%\item We can't miss the ones below even if we try!
+%\end{itemize}
+%\begin{center}
+%\includegraphics[width=0.5\textwidth]{figures/Ware-what-stands-out-1}%
+%\footnotemark[1]
+%\end{center}
+%\begin{itemize}
+%\item \visible<2->{Recognizing this type of difference is built into our visual
+%		system, in the retina itself, and in V1}
+%\end{itemize}
+%\footnotetext[1]{\textcolor{darkgrey}{Ware, Colin (2008): {\it Visual Thinking for Design}, Morgan Kaufmann. ISBN:~978-0-12-370896-0}}
+%\end{frame}
+%\end{frame}
+
+\begin{frame}
+\frametitle{What we can perceive}
+\begin{tabular}{@{}cc}
+\begin{minipage}[c]{0.8\textwidth}
+\includegraphics[width=\textwidth]{figures/Ware-what-stands-out}
+\end{minipage}
+&
+\begin{minipage}[c]{0.2\textwidth}
+%\begin{tabular}{@{}c@{}}
+%\includegraphics[width=\textwidth]{figures/Ware-Brain}\\
+\rotatebox{90}{%
+\begin{minipage}{0.8\textheight}
+{\footnotesize{\textcolor{darkgrey}{Colin Ware (2008): {\it Visual Thinking for Design}, Morgan Kaufmann.}}} %\\
+{\footnotesize{\textcolor{darkgrey}{\mbox{ISBN:~978-0-12-370896-0}}}}
+\end{minipage}}
+%\end{tabular}
+\end{minipage}
+\end{tabular}
+\end{frame}
+
+\begin{frame}
+\frametitle{What we can perceive - Easy and Hard}
+\begin{tabular}{cc}
+\includegraphics[width=0.5\textwidth]{figures/Ware-Easy-and-Hard-T}
+&
+\includegraphics[width=0.5\textwidth]{figures/Ware-Easy-and-Hard-Colour}
+\\
+\pause
+\includegraphics[width=0.5\textwidth]{figures/Ware-Easy-and-Hard-Bracket}
+&
+\includegraphics[width=0.5\textwidth]{figures/Ware-Easy-and-Hard-Angle}
+%\begin{tabular}{|c||c|}
+%\hline
+%\includegraphics[trim={1cm 6.5cm 12.5cm 13cm}, clip,
+%		width=0.5\textwidth]{figures/Ware-Easy-and-Hard}
+%		&
+%\includegraphics[trim={1cm 6.5cm 12.5cm 13cm}, clip,
+%		width=0.5\textwidth]{figures/Ware-Easy-and-Hard}
+%		\\
+%\hline
+%\includegraphics[trim={1cm 14.15cm 12cm 5.5cm}, clip,
+%		width=0.5\textwidth]{figures/Ware-Easy-and-Hard}
+%		\\
+%\hline
+\end{tabular}
+\footnotetext[1]{\textcolor{darkgrey}{Ware (2008): {\it Visual Thinking for Design}}}
+\end{frame}
+
+\begin{frame}
+\frametitle{We must design for the perceptual system we have}
+\begin{tabular}{c@{\hspace{3em}}c}
+\begin{minipage}[c]{0.8\textwidth}
+\includegraphics[width=\textwidth]{figures/Ware-Brain}
+\end{minipage}&
+\begin{minipage}[c]{0.1\textwidth}
+\rotatebox{90}{%
+\begin{minipage}{0.8\textheight}
+\footnotesize{\textcolor{darkgrey}{Ware (2008): {\it Visual Thinking for Design}}}
+\end{minipage}}
+\end{minipage}
+\end{tabular}
+\end{frame}
+%\begin{frame}
+%\includegraphics[width=\textwidth]{figures/Ware-Easy-and-Hard}
+%\end{frame}
+
+%\begin{frame}
+%\frametitle{What we can perceive}
+%\includegraphics[width=\textwidth]{figures/Ware-Processing-in-V1}
+%\end{frame}
+
+%\begin{frame}
+%\frametitle{What we can perceive}
+%\includegraphics[width=\textwidth]{figures/Ware-Visual-Search}
+%\end{frame}
+%
+%\begin{frame}
+%\frametitle{What we can perceive}
+%\includegraphics[width=\textwidth]{figures/Ware-Visual-Search-solution}
+%\end{frame}
+
+\begin{frame}
+\frametitle{A graph?}
+\includegraphics[trim={1cm 0.5cm 0 0}, clip,
+			width=\textwidth]{code/anscombe-scatter-all}
+\begin{textblock*}{5in}(0.6in,0.6in)
+\begin{minipage}{0.75\textwidth}
+\visible<2->{\Large No title? What does this even show?\\
+Where are the axis labels (and units)?\\}
+\end{minipage}
+\end{textblock*}
+\begin{textblock*}{3.5in}(2in,2.5in)
+\begin{minipage}{0.75\textwidth}
+\visible<2->{\Large This is not really a graph -- it's just some lines and dots!}
+\end{minipage}
+\end{textblock*}
+\begin{textblock*}{3.5in}(1.75in,1.75in)
+\begin{minipage}{0.75\textwidth}
+\visible<3->{\Huge \key{\faThumbsDown \faThumbsDown \faThumbsDown ~~~ \faThumbsDown \faThumbsDown \faThumbsDown}}
+\end{minipage}
+\end{textblock*}
+\end{frame}
+
+%\begin{frame}
+%\frametitle{Anscombe's \underline{four} data sets}
+%\includegraphics[width=\textwidth]{code/anscombe-scatter-all}
+%\begin{textblock*}{3.5in}(2in,2.25in)
+%\begin{minipage}{0.75\textwidth}
+%\visible<2->{\huge Four data sets but only one marker? \key{\faThumbsDown \faThumbsDown \faThumbsDown}}
+%\end{minipage}
+%\end{textblock*}
+%\end{frame}
+
+\begin{frame}
+\frametitle{Anscombe's data sets - \underline{size} indicates data set}
+\includegraphics[width=\textwidth]{code/anscombe-scatter-size}
+\begin{textblock*}{3.25in}(2in,0.75in)
+\begin{minipage}{0.75\textwidth}
+\visible<2->{\Large Size is one of the weaker channels}
+\end{minipage}
+\end{textblock*}
+\begin{textblock*}{3.25in}(2.2in,2in)
+\begin{minipage}{0.75\textwidth}
+\visible<2->{\Large Easy to compare nearby points, harder at distance}
+
+\visible<2->{\Large Note transparency (``alpha'') for overplotting}
+\end{minipage}
+\end{textblock*}
+\end{frame}
+
+\begin{frame}
+\frametitle{Anscombe's data sets - \underline{hue} indicates data set}
+\includegraphics[width=\textwidth]{code/anscombe-scatter-hue}
+\begin{textblock*}{3.5in}(2in,2.2in)
+\begin{minipage}{0.75\textwidth}
+\visible<2->{\Large Colour is a stronger channel --- for those who can perceive it
+\key{\faThumbsDown}}
+
+\visible<2->{\Large Transparency not as powerful here}
+\end{minipage}
+\end{textblock*}
+\end{frame}
+
+\begin{frame}
+\frametitle{Anscombe's data sets - \underline{hue and style} indicate data set}
+\includegraphics[width=\textwidth]{code/anscombe-scatter-hue+style}
+\begin{textblock*}{3.25in}(2.2in,2.5in)
+\begin{minipage}{0.75\textwidth}
+\visible<2->{\Large Not bad, but overplotting makes this \key{harder than it need be}}
+\end{minipage}
+\end{textblock*}
+\end{frame}
+
+%\begin{frame}
+%\frametitle{Anscombe's data sets - using {\tt seaborn swarmplot}}
+%\includegraphics[width=\textwidth]{code/anscombe-swarm-hue}
+%\begin{textblock*}{3.5in}(1.6in,0.25in)
+%\rotatebox{15}{
+%\begin{minipage}{0.75\textwidth}
+%\visible<2->{\Large Overplotting solved!} \\
+%\visible<3->{\Large But we have corrupted our data to do it!
+%	\key{\faThumbsDown \faThumbsDown}}\\
+%	~\\
+%	~\\
+%	~\\
+%	~\\
+%\visible<4->{\Large We also lost the ability to plot by style
+%	by using the ``{swarmplot}'' tool!
+%	\key{\faThumbsDown \faThumbsDown \faThumbsDown \faThumbsDown}}
+%\end{minipage}}
+%\end{textblock*}
+%\end{frame}
+
+\begin{frame}
+\frametitle{Anscombe's data sets -- separate plots, one figure}
+\begin{center}
+%\begin{tabular}{c@{}cc@{}c}
+\begin{tabular}{cc}
+%\rotatebox{90}{Data Set I}&
+\includegraphics[width=0.46\textwidth]{code/anscombe-scatter-dataset-I} &
+%\rotatebox{90}{Data Set II}&
+\includegraphics[width=0.46\textwidth]{code/anscombe-scatter-dataset-II} \\
+%\rotatebox{90}{Data Set III}&
+\includegraphics[width=0.46\textwidth]{code/anscombe-scatter-dataset-III} &
+%\rotatebox{90}{Data Set IV}&
+\includegraphics[width=0.46\textwidth]{code/anscombe-scatter-dataset-IV} \\
+\end{tabular}
+\end{center}
+\begin{textblock*}{4.5in}(1.25in,2in)
+\begin{minipage}{0.75\textwidth}
+\visible<2->{\Large
+Overplotting solved, and each data set is clearly identified! \faThumbsUp}
+\visible<2->{\key{But \dots}}
+\end{minipage}
+\end{textblock*}
+\end{frame}
+
+\begin{frame}
+\frametitle{Anscombe's data sets -- separate plots, one figure}
+\begin{center}
+%\begin{tabular}{c@{}cc@{}c}
+\begin{tabular}{cc}
+%\rotatebox{90}{Data Set I}&
+\includegraphics[width=0.46\textwidth]{code/anscombe-scatter-dataset-I} &
+%\rotatebox{90}{Data Set II}&
+\includegraphics[width=0.46\textwidth]{code/anscombe-scatter-dataset-II} \\
+%\rotatebox{90}{Data Set III}&
+\includegraphics[width=0.46\textwidth]{code/anscombe-scatter-dataset-III} &
+%\rotatebox{90}{Data Set IV}&
+\includegraphics[width=0.46\textwidth]{code/anscombe-scatter-dataset-IV} \\
+\end{tabular}
+\end{center}
+\begin{textblock*}{4.5in}(1.25in,2in)
+\begin{minipage}{0.75\textwidth}
+\visible<1->{\Large \key{Each plot has a separate range!}}
+\\
+\visible<1->{\Large It is \key{very} hard to compare across plots.
+\key{\faThumbsDown \faThumbsDown \faThumbsDown
+\faThumbsDown \faThumbsDown \faThumbsDown
+\faThumbsDown \faThumbsDown \faThumbsDown}}
+\end{minipage}
+\end{textblock*}
+\end{frame}
+
+\begin{frame}
+\frametitle{Anscombe's data sets -- from this\dots}
+\begin{center}
+%\begin{tabular}{c@{}cc@{}c}
+\begin{tabular}{cc}
+%\rotatebox{90}{Data Set I}&
+\includegraphics[width=0.46\textwidth]{code/anscombe-scatter-dataset-I} &
+%\rotatebox{90}{Data Set II}&
+\includegraphics[width=0.46\textwidth]{code/anscombe-scatter-dataset-II} \\
+%\rotatebox{90}{Data Set III}&
+\includegraphics[width=0.46\textwidth]{code/anscombe-scatter-dataset-III} &
+%\rotatebox{90}{Data Set IV}&
+\includegraphics[width=0.46\textwidth]{code/anscombe-scatter-dataset-IV} \\
+\end{tabular}
+\end{center}
+\begin{textblock*}{1in}(2.5in,1.8in)
+\key{\Huge \faThumbsDown}
+\end{textblock*}
+\end{frame}
+
+\begin{frame}
+\frametitle{Anscombe's data sets -- to this! Axes fixed!}
+\begin{center}
+%\begin{tabular}{c@{}cc@{}c}
+\begin{tabular}{cc}
+%\rotatebox{90}{Data Set I}&
+\includegraphics[width=0.46\textwidth]{code/anscombe-scatter-dataset-I-limits} &
+%\rotatebox{90}{Data Set II}&
+\includegraphics[width=0.46\textwidth]{code/anscombe-scatter-dataset-II-limits} \\
+%\rotatebox{90}{Data Set III}&
+\includegraphics[width=0.46\textwidth]{code/anscombe-scatter-dataset-III-limits} &
+%\rotatebox{90}{Data Set IV}&
+\includegraphics[width=0.46\textwidth]{code/anscombe-scatter-dataset-IV-limits} \\
+\end{tabular}
+\end{center}
+\begin{textblock*}{3.5in}(2.5in,1.8in)
+\begin{minipage}{0.75\textwidth}
+%\visible<2->{\Huge \key{\faThumbsUp}}
+\end{minipage}
+\end{textblock*}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Anscombe's data sets - linear model plot}
+\begin{tabular}{@{}cc}
+\begin{minipage}[c]{0.75\textwidth}
+\includegraphics[width=\textwidth]{code/anscombe-lmplot}
+\end{minipage}&
+\begin{minipage}[c]{0.25\textwidth}
+{\scriptsize \tt sns.lmplot(x="x", y="y", col="dataset", hue="dataset", data=df, col\_wrap=2)}
+\begin{itemize}
+\item \pause common axes?  {\key \faThumbsUp}
+\item id data sets?  {\key \faThumbsUp}
+\item colour as highlight only {\key \faThumbsUp}
+\end{itemize}
+\end{minipage}
+\end{tabular}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Boxplots}
+\begin{tabular}{@{}cc}
+\begin{minipage}{0.5\textwidth}
+\includegraphics[width=\textwidth]{code/boxplot}
+\end{minipage}&
+\begin{minipage}{0.5\textwidth}
+\visible<3->{\includegraphics[width=\textwidth]{code/boxplot-swarm}}
+\end{minipage}
+\end{tabular}
+\begin{itemize}
+\item A boxplot provides a ``5 number summary'': median, lower/upper quartiles, min/max. \pause Are these useful for \key{your} data? 
+\item A boxplot will encourage you to think of your data as centrally tended, even when it is not.
+\begin{center}
+{\large \key{Always plot the points} to see what is going on.}
+%(We have ``jiggled'' the data here.)
+\end{center}
+%\vspace{1em}
+{\scriptsize
+{\tt sns.boxplot(x="Source", y="Measure", data=df)}\\
+{\tt sns.swarmplot(x="Source", y="Measure", data=df, color="0.25")}}
+\end{itemize}
+\end{frame}
+
+%\begin{frame}
+%\frametitle{Boxplots}
+%\begin{tabular}{@{}cc}
+%\begin{minipage}{0.5\textwidth}
+%\includegraphics[width=\textwidth]{code/boxplot}
+%\end{minipage}&
+%\begin{minipage}{0.5\textwidth}
+%\visible<1->{\includegraphics[width=\textwidth]{code/boxplot-swarm}}
+%\end{minipage}
+%\end{tabular}
+%\begin{description}
+%\item[A] a normal $\mathcal{N}(\mu=10,\sigma=4)$ distribution
+%\item[B] a Laplace
+%		$\mathcal{L}(\mu=10,b=2.5)$ distribution
+%\item[C] bimodal:
+%		$\mathcal{N}(\mu=4,\sigma=2)$ +
+%		$\mathcal{N}(\mu=16,\sigma=1)$
+%\item[D] two ranges of points,
+%		$[-2 \dots 7]$,
+%		$[16 \dots 35]$
+%\item[E] two ranges of points,
+%		$[-1 \dots 10]$,
+%		$[2 \dots 13]$
+%\item[F] a uniform $\mathcal{U}[2 \dots 20]$ distribution
+%\item[G] an exponential $\mathcal{E}(\lambda=0.125)$ distribution ($\lambda = \frac{1}{\mu}$)
+%\end{description}
+%\end{frame}
+
+\begin{frame}
+\frametitle{Boxplots and whiskers}
+\begin{tabular}{@{}cc}
+\begin{minipage}{0.5\textwidth}
+\includegraphics[width=\textwidth]{code/boxplot}
+\end{minipage}&
+\begin{minipage}{0.5\textwidth}
+\includegraphics[width=\textwidth]{code/boxplot-swarm}
+\end{minipage}
+\end{tabular}
+\begin{itemize}
+\item Make sure you know where your whiskers go to!
+\item
+\key{R/matplotlib(seaborn)}: box=quartiles, whisker = furthest point within 1.5 of quartile length (on that side)
+\item
+\key{Excel}: default = whisker to max/min
+\item
+\key{Others}: various, and commonly 2 standard deviations
+%
+%boxplots
+%display the two central quartiles within the box enclosure,
+%and include a whisker that extends to the most extreme data point that
+%lies within a distance of 1.5 times the length of the box enclosure.
+%In 
+%cases where the whiskers do not extend to the min/max value, any outlying values beyond the whisker are shown as outliers (dots).''
+\end{itemize}
+\begin{center}
+\key{Be sure you know what your package does!}
+\end{center}
+\end{frame}
+
+%\begin{frame}
+%\frametitle{Boxplots and whiskers}
+%\begin{tabular}{@{}cc}
+%\begin{minipage}{0.5\textwidth}
+%\includegraphics[width=\textwidth]{code/boxplot}
+%\end{minipage}&
+%\begin{minipage}{0.5\textwidth}
+%\includegraphics[width=\textwidth]{code/boxplot-swarm}
+%\end{minipage}
+%\end{tabular}
+%\begin{itemize}
+%\item \key{Excel} boxplots \underline{do not} include outliers by default, and the whisker goes to the min/max point.  Boxes showing Q$_2$ and Q$_3$ are unchanged.
+%\pause
+%\item Other packages may create boxplots where instead of quartiles, the boxes and whiskers are based on (1 \& 2) standard deviations!
+%\key{Be sure you understand what your package shows!}
+%\end{itemize}
+%\end{frame}
+
+\begin{frame}
+\frametitle{Scatters and Lines}
+\begin{tabular}{@{}cc}
+\begin{minipage}{0.5\textwidth}
+\includegraphics[width=\textwidth]{code/anscombe-lineplot-nomarkers-despine}
+\end{minipage}&
+\begin{minipage}{0.5\textwidth}
+\includegraphics[width=\textwidth]{code/anscombe-lineplot-withmarkers-despine}
+\end{minipage}\\
+\begin{minipage}{0.5\textwidth}
+\includegraphics[width=\textwidth]{code/anscombe-lineplot-scatter-despine}
+\end{minipage}&
+\begin{minipage}{0.5\textwidth}
+\begin{itemize}
+\item lines make association between points much more visible, {\large but \dots}
+\item lines imply a series -- don't use them if there isn't one
+\item don't hide your sample points
+\end{itemize}
+\end{minipage}\\
+\end{tabular}
+\end{frame}
+
+\begin{frame}
+\frametitle{Scatters and Lines}
+\begin{tabular}{@{}cc}
+\begin{minipage}{0.5\textwidth}
+%\visible<1>
+{\includegraphics[width=\textwidth]{code/anscombe-lineplot-nomarkers}}
+\end{minipage}&
+\begin{minipage}{0.5\textwidth}
+\includegraphics[width=\textwidth]{code/anscombe-lineplot-withmarkers}
+\end{minipage}\\
+\begin{minipage}{0.5\textwidth}
+\includegraphics[width=\textwidth]{code/anscombe-lineplot-scatter}
+\end{minipage}&
+\begin{minipage}{0.5\textwidth}
+\begin{itemize}
+\item note that the ``data box'' makes the outlying $\times$ point easier to see as it is distinguished from the plot above \dots
+%\pause
+%\item but it helps hide the data point if the plot is by itself!
+\end{itemize}
+\end{minipage}\\
+\end{tabular}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Categorical Data}
+\begin{tabular}{@{}cc}
+\begin{minipage}{0.4\textwidth}
+\includegraphics[width=\textwidth]{code/barplot-tips}
+\end{minipage}&
+\begin{minipage}{0.6\textwidth}
+\begin{itemize}
+\item use barplots for categorical data
+\item \visible<2->{works both vertically and horizontally:}
+\begin{itemize}
+\item \visible<2->{only time you should put a
+		\key{dependent variable} on the $x$ axis!}
+\end{itemize}
+\end{itemize}
+\end{minipage}\\
+\end{tabular}
+\begin{tabular}{@{}cc}
+\begin{minipage}[c]{0.75\textwidth}
+\visible<3->{Far, far better than pies!}
+	\begin{itemize}
+	\item \visible<3->{estimating relative size of pie sections is hard -- visual cortex does not extract fine distinctions between angles under rotation}
+	\item \visible<3->{but bars are easy to compare!}
+	\item \visible<4->{almost impossible to compare \key{two} pies}
+	\item \visible<4->{they take up more space for the same data, and need to be much larger to be understood}
+	\item \visible<4->{``3D'' effects on pies make this all worse}
+	\end{itemize}
+\end{minipage}&
+\begin{minipage}[c]{0.25\textwidth}
+\begin{tabular}{@{}c@{}}
+\visible<2->{\includegraphics[width=\textwidth]{code/barplot-tips-horizontal-smoker}}\\
+\visible<3->{\includegraphics[width=\textwidth]{code/barplot-tips-horizontal-nosmoker}}\\
+\end{tabular}
+%\begin{tabular}{@{}c@{\hspace{0.25em}}c@{}}
+%\visible<2->{\rotatebox{90}{\scriptsize Smoker}}&\visible<2->{\includegraphics[width=\textwidth]{code/barplot-tips-horizontal-smoker}}\\
+%\visible<2->{\rotatebox{90}{\scriptsize ~~~Nonsmoker}}&\visible<2->{\includegraphics[width=\textwidth]{code/barplot-tips-horizontal-nosmoker}}\\
+%\end{tabular}
+\end{minipage}\\
+\end{tabular}
+\end{frame}
+
+%\begin{frame}
+%\frametitle{When to jiggle?}
+%When does it \key{make sense} to jiggle datapoints?
+%
+%\pause
+%You can jiggle points as long as they do not cross columns:
+%\begin{itemize}
+%\item when your data is \key{categorical} in some dimension
+%		(\eg treatment names, locations)
+%\item when your data is \key{discrete} -- jiggling on a scatterplot
+%		is otherwise not recommended.
+%\vspace{1em}
+%\end{itemize}
+%\end{frame}
+
+
+
+\begin{frame}
+\frametitle{File format -- raster graphics}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{code/bateman-PNG-zoom}
+\end{center}\vspace{-1em}
+PNG, JPEG, GIF, TIFF \etc \pause \key{\faThumbsDown}
+
+These are called ``raster graphic'' formats.  Their data is in \key{pixels}.
+They all look like crap when zoomed in.
+\key{If you are drawing your own figure, it doesn't have to be like this!}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{File format -- vector graphics}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{code/bateman-PDF-zoom}
+\end{center}\vspace{-1em}
+\key{PDF}, \key{EPS} \faThumbsUp
+
+These \key{vector graphic} data formats can store ``\key{pen strokes}'' instead of \sout{pixels}, so the image can withstand arbitrary zoom.
+
+\key{Use everywhere}, but \key{especially on {\large POSTERS}!}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Perceptual Design Constraints and Strategies}
+\begin{tabular}{@{}cc}
+\begin{minipage}{0.65\textwidth}
+\begin{itemize}
+\item to make something easy to find, make it different from
+		surroundings according to a primary visual channel
+\item to make several things easy to search, use multiple channels
+\end{itemize}
+\end{minipage}&
+\begin{minipage}{0.4\textwidth}
+\includegraphics[width=\textwidth]{figures/Ware-GDP-example}\footnotemark[2]
+\end{minipage}
+\end{tabular}
+\begin{itemize}
+\item using two channels for same distinction makes it easier
+\item we only have 8-10 channels, and only $\sim 3$ steps per channel
+\pause
+\item
+		\textcolor{red}{c}%
+		\textcolor{orange}{o}%
+		\textcolor{brown}{l}%
+		\textcolor{jade}{o}%
+		\textcolor{blue}{u}%
+		\textcolor{purple}{r} is powerful but hard to use well:
+	\begin{itemize}
+	\item common perceptual difference: red/green + blue/green
+	%\item \theref we can't depend on colour being visible
+	\item
+		``\textcolor{jade}{angry}
+		\textcolor{cyan}{fruit}
+		\textcolor{blue}{salad}''
+		\textcolor{brown}{is}
+		\textcolor{magenta}{awful}
+		\textcolor{orange}{--}
+		\textcolor{orchid}{and}
+		\underline{\textcolor{pink}{contrast}
+		\textcolor{yellow}{is}
+		\textcolor{green}{critical}}
+	\item projector has less dynamic range than a monitor
+	\end{itemize}
+	\pause
+\item
+	\textcolor{grey1}{i}%
+	\textcolor{grey2}{n}%
+	\textcolor{grey3}{t}%
+	\textcolor{grey4}{e}%
+	\textcolor{grey5}{n}%
+	\textcolor{grey6}{s}%
+	\textcolor{grey7}{i}%
+	\textcolor{grey8}{t}%
+	\textcolor{black}{y}
+	is accessible, powerful and easy to use
+	\begin{itemize}
+	\item combine intensity with colour in gradients
+	\item ensure \key{monotonic} change in intensity
+	\end{itemize}
+\end{itemize}
+\footnotetext[2]{\textcolor{darkgrey}{Ware (2008): {\it Visual Thinking for Design}}}
+\end{frame}
+
+\begin{frame}
+\frametitle{Improving the visualization}
+\begin{itemize}
+\item reduce the clutter -- improve the ``data-ink ratio''\footnote{\textcolor{darkgrey}{E.~Tufte (1983): {\it The Visual Display of Quantitative Data}, Graphics Press.\\ ISBN:  0-961-3921-2-6}}
+\begin{center}
+\begin{tabular}{cc}
+\includegraphics[width=0.3\textwidth]{figures/Dir1}&
+\includegraphics[width=0.3\textwidth]{figures/Dir2}
+\end{tabular}
+\end{center}
+\item choose distinct graphical elements; separable by channel; avoid overlap
+\item ensure data series are referenced; labels + legend \emph{must} be clear of the data
+\item use all your space; log axes may be appropriate to spread information
+\item \key{provide explanations and draw conclusions}
+\end{itemize}
+\end{frame}
+
+
+%\begin{frame}
+%\frametitle{Summary}
+%\begin{itemize}
+%\item think about what you want to say -- attach this to a primary channel
+%\item choose a representation that leverages visual channels, but does
+%		not overwhelm the viewer with fine distinctions (\eg too many colours, shapes)
+%\item use complementary channels for different data
+%\item use ink sparingly -- maximize the data-ink ratio
+%\item don't let your tools get the better of you!
+%\item explain your visualization in your document
+%\end{itemize}
+%\end{frame}
+
+%\begin{frame}
+%\frametitle{File format}
+%\begin{tabular}{!{}cc}
+%\includegraphics[width=0.5\textwidth]{code/bateman-PNG-zoom}&
+%\visible<2->{\includegraphics[width=0.5\textwidth]{code/bateman-PDF-zoom}}\\
+%Raster Graphics & \visible<2->{Vector Graphics}\\
+%PNG, GIF, JPEG & \visible<2->{PDF, EPS}\\
+%\end{tabular}
+%\end{frame}
+
+\end{document}
