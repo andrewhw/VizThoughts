@@ -388,15 +388,15 @@ University of Guelph\\
 
 \begin{frame}
 \frametitle{A graph?}
-\includegraphics[trim={1cm 0.5cm 0 0}, clip,
+\includegraphics[ %trim={1cm 0.5cm 0 0}, clip,
 			width=\textwidth]{code/anscombe-scatter-all}
-\begin{textblock*}{5in}(0.6in,0.6in)
+\begin{textblock*}{5in}(0.9in,0.55in)
 \begin{minipage}{0.75\textwidth}
 \visible<2->{\Large No title? What does this even show?\\
 Where are the axis labels (and units)?\\}
 \end{minipage}
 \end{textblock*}
-\begin{textblock*}{3.5in}(2in,2.5in)
+\begin{textblock*}{3.5in}(2.125in,2.5in)
 \begin{minipage}{0.75\textwidth}
 \visible<2->{\Large This is not really a graph -- it's just some lines and dots!}
 \end{minipage}
@@ -440,10 +440,10 @@ Where are the axis labels (and units)?\\}
 \includegraphics[width=\textwidth]{code/anscombe-scatter-hue}
 \begin{textblock*}{3.5in}(2in,2.2in)
 \begin{minipage}{0.75\textwidth}
-\visible<2->{\Large Colour is a stronger channel --- for those who can perceive it
+\visible<2->{\Large Colour is a stronger channel \dots} \visible<3->{for those who can perceive it!
 \key{\faThumbsDown}}
 
-\visible<2->{\Large Transparency not as powerful here}
+\visible<3->{\Large Note transparency is not as powerful here -- why?}
 \end{minipage}
 \end{textblock*}
 \end{frame}
@@ -670,7 +670,7 @@ Overplotting solved, and each data set is clearly identified! \faThumbsUp}
 %cases where the whiskers do not extend to the min/max value, any outlying values beyond the whisker are shown as outliers (dots).''
 \end{itemize}
 \begin{center}
-\key{Be sure you know what your package does!}
+\key{Be sure you know what \underline{your} package does!}
 \end{center}
 \end{frame}
 
@@ -699,16 +699,16 @@ Overplotting solved, and each data set is clearly identified! \faThumbsUp}
 \includegraphics[width=\textwidth]{code/anscombe-lineplot-nomarkers-despine}
 \end{minipage}&
 \begin{minipage}{0.5\textwidth}
-\includegraphics[width=\textwidth]{code/anscombe-lineplot-withmarkers-despine}
+\visible<2->{\includegraphics[width=\textwidth]{code/anscombe-lineplot-withmarkers-despine}}
 \end{minipage}\\
 \begin{minipage}{0.5\textwidth}
-\includegraphics[width=\textwidth]{code/anscombe-lineplot-scatter-despine}
+\visible<2->{\includegraphics[width=\textwidth]{code/anscombe-lineplot-scatter-despine}}
 \end{minipage}&
 \begin{minipage}{0.5\textwidth}
 \begin{itemize}
 \item lines make association between points much more visible, {\large but \dots}
-\item lines imply a series -- don't use them if there isn't one
-\item don't hide your sample points
+\item \visible<2->{lines imply a series -- don't use them if there isn't one}
+\item \visible<2->{don't hide your sample points}
 \end{itemize}
 \end{minipage}\\
 \end{tabular}
