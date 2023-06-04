@@ -829,18 +829,40 @@ These \key{vector graphic} data formats can store ``\key{pen strokes}'' instead 
 
 \begin{frame}
 \frametitle{Perceptual Design Constraints and Strategies}
-\begin{tabular}{@{}cc}
-\begin{minipage}{0.65\textwidth}
+\begin{tabular}{@{}ccc}
+\multicolumn{2}{c}{
+\begin{minipage}{0.6\textwidth}
 \begin{itemize}
 \item to make something easy to find, make it different from
 		surroundings according to a primary visual channel
 \item to make several things easy to search, use multiple channels
 \end{itemize}
-\end{minipage}&
+\end{minipage}}&
 \begin{minipage}{0.4\textwidth}
 \includegraphics[width=\textwidth]{figures/Ware-GDP-example}\footnotemark[2]
-\end{minipage}
+\end{minipage}\\[0.5em]
+\multicolumn{3}{@{}c}{\begin{minipage}{\textwidth}
+\pause
+\begin{block}{N.B.}
+Avoid overloading channels with conflicting information
+\end{block}
+\end{minipage}}\\
+\begin{minipage}{0.3\textwidth}
+\includegraphics[width=\textwidth]{figures/Ware-Overload}
+\end{minipage}&
+\multicolumn{2}{c}{\begin{minipage}{0.7\textwidth}
+~\\ %\vspace{0.25em}\\
+``There are three green squares in this pattern.  The green squares do not show a pop-out effect, even though you know what to look for.
+The problem is that your visual cortex can either be tuned for the square shapes or the green things, but not both''\footnotemark[3]
+\end{minipage}}
 \end{tabular}
+\footnotetext[2]{\textcolor{darkgrey}{Ware (2008): {\it Visual Thinking for Design}}}
+\footnotetext[3]{\textcolor{darkgrey}{Ware (2008): {\it Visual Thinking for Design, pp.~30.}}}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Perceptual Design Constraints and Strategies}
 \begin{itemize}
 \item using two channels for same distinction makes it easier
 \item we only have 8-10 channels, and only $\sim 3$ steps per channel
@@ -885,7 +907,6 @@ These \key{vector graphic} data formats can store ``\key{pen strokes}'' instead 
 	\item ensure \key{monotonic} change in intensity
 	\end{itemize}
 \end{itemize}
-\footnotetext[2]{\textcolor{darkgrey}{Ware (2008): {\it Visual Thinking for Design}}}
 \end{frame}
 
 \begin{frame}
@@ -901,7 +922,11 @@ These \key{vector graphic} data formats can store ``\key{pen strokes}'' instead 
 \item choose distinct graphical elements; separable by channel; avoid overlap
 \item ensure data series are referenced; labels + legend \emph{must} be clear of the data
 \item use all your space; log axes may be appropriate to spread information
-\item \key{provide explanations and draw conclusions}
+\item \key{provide explanations in the text and draw conclusions}
+	\begin{itemize}
+	\item Don't be afraid to tell the reader what you want them to see
+	and learn from your diagram
+	\end{itemize}
 \end{itemize}
 \end{frame}
 
