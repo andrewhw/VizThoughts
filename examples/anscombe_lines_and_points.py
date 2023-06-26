@@ -28,13 +28,13 @@ df_2_and_3 = df.loc[(df['dataset'] == "II") | (df['dataset'] == "III")]
 df = df.rename(columns={"x":"x (unitless)", "y":"y (unitless)"})
 
 
-## use hue (colour) to differentiate the data sets
-
 # get the figure when the canvas is blank -- once drawn, we can save it
 fig = plt.figure()
 
 # Draw on the canvas using a seaborn plotting tool.
 # This creates a lineplot with points (markers=True)
+#
+# use hue (colour) to differentiate the data sets
 sns.lineplot(x = "x (unitless)", y = "y (unitless)",
 		style="dataset", hue="dataset", markers=True,
 		data=df_2_and_3)
