@@ -260,6 +260,24 @@ University of Guelph\\
 \end{frame}
 
 
+\begin{frame}
+\frametitle{We must design for the perceptual system we have}
+\begin{tabular}{c@{\hspace{3em}}c}
+\begin{minipage}[c]{0.8\textwidth}
+\includegraphics[width=\textwidth]{figures/Ware-Brain}
+\end{minipage}&
+\begin{minipage}[c]{0.1\textwidth}
+\rotatebox{90}{%
+\begin{minipage}{0.8\textheight}
+\footnotesize{\textcolor{darkgrey}{Ware (2008): {\it Visual Thinking for Design}}}
+\end{minipage}}
+\end{minipage}
+\end{tabular}
+\end{frame}
+%\begin{frame}
+%\includegraphics[width=\textwidth]{figures/Ware-Easy-and-Hard}
+%\end{frame}
+
 %\begin{frame}
 %\frametitle{What we have to work with}
 %\begin{tabular}{@{}ll@{}}
@@ -352,24 +370,6 @@ University of Guelph\\
 \end{tabular}
 \footnotetext[1]{\textcolor{darkgrey}{Ware (2008): {\it Visual Thinking for Design}}}
 \end{frame}
-
-\begin{frame}
-\frametitle{We must design for the perceptual system we have}
-\begin{tabular}{c@{\hspace{3em}}c}
-\begin{minipage}[c]{0.8\textwidth}
-\includegraphics[width=\textwidth]{figures/Ware-Brain}
-\end{minipage}&
-\begin{minipage}[c]{0.1\textwidth}
-\rotatebox{90}{%
-\begin{minipage}{0.8\textheight}
-\footnotesize{\textcolor{darkgrey}{Ware (2008): {\it Visual Thinking for Design}}}
-\end{minipage}}
-\end{minipage}
-\end{tabular}
-\end{frame}
-%\begin{frame}
-%\includegraphics[width=\textwidth]{figures/Ware-Easy-and-Hard}
-%\end{frame}
 
 %\begin{frame}
 %\frametitle{What we can perceive}
@@ -607,7 +607,7 @@ Overplotting solved, and each data set is clearly identified! \faThumbsUp}
 \end{minipage}
 \end{tabular}
 \begin{itemize}
-\item A boxplot provides a ``5 number summary'': median, lower/upper quartiles, min/max. \pause Are these useful for \key{your} data? 
+\item A boxplot provides a ``5 number summary'': median, lower/upper quartiles, min/max. \pause Are these useful for \key{your} data?  \pause
 \item A boxplot will encourage you to think of your data as centrally tended, even when it is not.
 \begin{center}
 {\large \key{Always plot the points} to see what is going on.}
@@ -661,9 +661,9 @@ Overplotting solved, and each data set is clearly identified! \faThumbsUp}
 \begin{itemize}
 \item Make sure you know where your whiskers go to!
 \item
-\key{R/matplotlib(seaborn)}: box=quartiles, whisker = furthest point within 1.5 of quartile length (on that side)
+\key{R/matplotlib(seaborn)}: box=quartiles, whisker = furthest point within 1.5 of quartile length (on that side)  \pause
 \item
-\key{Excel}: default = whisker to max/min
+\key{Excel}: default = whisker to max/min \pause
 \item
 \key{Others}: various, and commonly 2 standard deviations
 %
@@ -742,6 +742,27 @@ Overplotting solved, and each data set is clearly identified! \faThumbsUp}
 \end{tabular}
 \end{frame}
 
+\begin{frame}
+\frametitle{Plot context}
+\begin{tabular}{c}
+\\
+\includegraphics[width=0.75\textwidth]{code/anscombe-lineplot-scatter}
+\end{tabular}
+\begin{itemize}
+\item but is this true when nothing is close to the plot?
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Plot context}
+\begin{tabular}{c}
+\\
+\includegraphics[width=0.75\textwidth]{code/anscombe-lineplot-scatter-despine}
+\end{tabular}
+\begin{itemize}
+\item but is this true when nothing is close to the plot?
+\end{itemize}
+\end{frame}
 
 \begin{frame}
 \frametitle{Categorical Data}
